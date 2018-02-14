@@ -92,7 +92,10 @@ public abstract class OAbstractLookupTransformer extends OAbstractTransformer {
           String s = joinValue.toString();
         if (sqlQuery instanceof OSQLSynchQuery)
           ((OSQLSynchQuery) sqlQuery).resetPagination();
-        result = pipeline.getDocumentDatabase().query(new OSQLSynchQuery<ODocument>(s));
+        if (s.toUpperCase(Locale.ENGLISH).startsWith("SELECT"))
+            result = pipeline.getDocumentDatabase().query(new OSQLSynchQuery<ODocument>(s));
+        else
+            result = pipeline.getDocumentDatabase().query(sqlQuery, joinValue);
       }
 
       if (result != null && result instanceof Collection) {
