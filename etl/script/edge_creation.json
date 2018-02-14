@@ -1,0 +1,18 @@
+{
+  "config":{"log":"debug", "haltOnError": false, "parallel": false},
+  "source": {"file": { "path": "script/edge_creation.csv" } },
+  "extractor": {"csv": {"separator":",","nullValue": "","ignoreEmptyLines":true}},
+  "transformers" : [
+    {"merge": { "joinFieldName": "query", "lookup": "select from person where master_user_id=1"}},
+    { "field": { "fieldNames": ["query"], "operation": "remove" } }
+  ],
+  "loader": {
+    "orientdb": {
+      "dbURL": "remote:localhost:2424/paysense",
+      "serverUser": "root",
+      "serverPassword": "paysense",
+      "dbType": "graph",
+      "wal": false
+    }
+  }
+}
