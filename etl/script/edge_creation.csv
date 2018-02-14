@@ -1,0 +1,2 @@
+name,last_contact,number_of_times_contacted,query
+Dinakar,1518590520,1,select from(select expand(outE('User_device')) from person where master_user_id=1) where inV().device_id='1'
